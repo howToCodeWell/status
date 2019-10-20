@@ -1,5 +1,11 @@
 version: '3'
 
+volumes:
+  db-data:
+
+networks:
+  status_checker_net:
+
 services:
   site:
     volumes:
@@ -11,3 +17,16 @@ services:
       - 80:80
     build:
       context: .
+    networks:
+      - status_checker_net
+
+  db:
+    image:  mysql:5.7
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=status_checker
+    networks:
+      - status_checker_net
