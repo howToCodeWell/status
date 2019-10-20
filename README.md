@@ -18,8 +18,14 @@ $ vi .env
 ```
 $ chmod +ux bin/* && ./bin/install
 ```
+4 Run the database migrations and seeders
+```
+$ docker-compose exec site bash
+$ ./artisan migrate
+$ ./artisan db:seed  --class=SiteTableSeeder
+```
 
-4 Open browser
+5 Open browser
 ```
 $ docker-machine ip status-checker
 $ open <DOCKER_MACHINE_IP>
