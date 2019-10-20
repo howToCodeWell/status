@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  site:
+    volumes:
+      - .:/var/www/html
+      - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/site/public
+    ports:
+      - 80:80
+    build:
+      context: .
