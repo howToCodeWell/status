@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   db-data:
+  storage:
 
 networks:
   status_checker_net:
@@ -9,6 +10,7 @@ networks:
 services:
   site:
     volumes:
+      - storage:/var/www/html/site/storage
       - .:/var/www/html
       - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
     environment:
