@@ -10,8 +10,8 @@ networks:
 services:
   site:
     volumes:
-      - storage:/var/www/html/site/storage
       - .:/var/www/html
+      - storage:/var/www/html/site/storage
       - ./config/vhost.conf:/etc/apache2/sites-available/000-default.conf
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/site/public

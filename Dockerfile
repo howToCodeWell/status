@@ -13,8 +13,7 @@ RUN apt-get update && apt-get install -y                \
 
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
-COPY ./site /var/www/site
-RUN chown -R www-data:www-data /var/www/site/storage
-RUN chmod 755 /var/www/site/storage
+COPY . /var/www/html/
+RUN chown -R 33:33 /var/www/html/site/storage
 
-
+WORKDIR /var/www/html/site
