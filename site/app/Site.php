@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Site extends Model
 {
@@ -18,4 +19,8 @@ class Site extends Model
         'url'
     ];
 
+    public function results() :HasMany
+    {
+        return $this->hasMany(Result::class);
+    }
 }
