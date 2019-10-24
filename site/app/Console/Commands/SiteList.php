@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Result;
 use Illuminate\Console\Command;
 use App\Site;
 
@@ -38,11 +39,33 @@ class SiteList extends Command
      */
     public function handle()
     {
-        $sites = Site::all(['id','name', 'url'])->toArray();
+        $dataSet = [];
+
+        $sites = Site::all(['id','name', 'url']);
+
+        /*  @var Site $site */
+        foreach ($sites as $site) {
+            $passed = false;
+            $statusCode = null;
+            $result = $site->results()->latest()->first();
+            if($result instanceof Result) {
+                $passed = $result->passed;
+                $statusCode = $result->status_code;
+            }
+            $data = [
+                $site->id,
+                $site->name,
+                $site->url,
+                ($passed) ? 'Passed: '.$statusCode : 'Failed: ' .$statusCode
+            ];
+
+            array_push($dataSet, $data);
+        }
+
         $count = count($sites);
         $this->info($count . ' sites found');
         $headers = ['Id', 'Name', 'URL', 'Result'];
-        $this->table($headers, $sites);
+        $this->table($headers, $dataSet);
     }
 
 
