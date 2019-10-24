@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Result;
-use Illuminate\Console\Command;
 use App\Site;
+use Illuminate\Console\Command;
 
 class SiteList extends Command
 {
@@ -41,22 +40,16 @@ class SiteList extends Command
     {
         $dataSet = [];
 
-        $sites = Site::all(['id','name', 'url']);
+        $sites = Site::all(['id', 'name', 'url']);
 
         /*  @var Site $site */
         foreach ($sites as $site) {
-            $passed = false;
-            $statusCode = null;
-            $result = $site->results()->latest()->first();
-            if($result instanceof Result) {
-                $passed = $result->passed;
-                $statusCode = $result->status_code;
-            }
+            $result = $site->getLatestResult();
             $data = [
                 $site->id,
                 $site->name,
                 $site->url,
-                ($passed) ? 'Passed: '.$statusCode : 'Failed: ' .$statusCode
+                ($result->passed) ? 'Passed: ' . $result->status_code : 'Failed: ' . $result->status_code
             ];
 
             array_push($dataSet, $data);
