@@ -19,7 +19,13 @@
         <td>
             <a href="{{ $site->url }}">{{$site->name}}</a>
         </td>
-        <td>--</td>
+        <td>
+            @if($site->hasPassed())
+                Passed
+            @else
+                Failed
+            @endif
+        </td>
     </tr>
     @endforeach
     </tbody>
