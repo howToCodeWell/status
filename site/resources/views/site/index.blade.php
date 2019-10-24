@@ -10,6 +10,7 @@
     <thead>
     <tr>
         <td>Site Name</td>
+        <td>Date Checked</td>
         <td>Result</td>
     </tr>
     </thead>
@@ -18,6 +19,9 @@
     <tr>
         <td>
             <a href="{{ $site->url }}">{{$site->name}}</a>
+        </td>
+        <td>
+            {{ $site->getLatestResult()->created_at->format('d-m-Y h:i:s') }}
         </td>
         <td>
             @if($site->hasPassed())

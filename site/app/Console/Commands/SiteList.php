@@ -49,6 +49,7 @@ class SiteList extends Command
                 $site->id,
                 $site->name,
                 $site->url,
+                $result->created_at->format('d-m-Y h:i:s'),
                 ($result->passed) ? 'Passed: ' . $result->status_code : 'Failed: ' . $result->status_code
             ];
 
@@ -57,7 +58,7 @@ class SiteList extends Command
 
         $count = count($sites);
         $this->info($count . ' sites found');
-        $headers = ['Id', 'Name', 'URL', 'Result'];
+        $headers = ['Id', 'Name', 'URL', 'Date Checked', 'Result'];
         $this->table($headers, $dataSet);
     }
 
