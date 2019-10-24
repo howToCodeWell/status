@@ -9,6 +9,6 @@ class SiteController extends BaseController
 {
     public function index()
     {
-        return view('site.index', ['sites' => Site::all(), 'results' => []]);
+        return view('site.index', ['sites' => Site::all()]);
     }
 }
