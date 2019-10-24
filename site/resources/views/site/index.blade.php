@@ -20,16 +20,21 @@
         <td>
             <a href="{{ $site->url }}">{{$site->name}}</a>
         </td>
-        <td>
-            {{ $site->getLatestResult()->created_at->format('d-m-Y h:i:s') }}
-        </td>
-        <td>
-            @if($site->hasPassed())
-                Passed
-            @else
-                Failed
-            @endif
-        </td>
+
+        @if($site->getLatestResult())
+            <td>{{ $site->getLatestResult()->created_at->format('d-m-Y h:i:s') }}</td>
+            <td>
+                @if($site->getLatestResult()->passed)
+                    Passed
+                @else
+                    Failed
+                @endif
+            </td>
+        @else
+            <td>-</td>
+            <td>-</td>
+        @endif
+
     </tr>
     @endforeach
     </tbody>

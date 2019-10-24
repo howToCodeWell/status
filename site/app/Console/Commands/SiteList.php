@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Result;
 use App\Site;
 use Illuminate\Console\Command;
 
@@ -45,12 +46,19 @@ class SiteList extends Command
         /*  @var Site $site */
         foreach ($sites as $site) {
             $result = $site->getLatestResult();
+            $date = '-';
+            $status= 'Failed';
+            if ($result instanceof Result) {
+                $date =  $result->created_at->format('d-m-Y h:i:s');
+                $status = ($result->passed) ? 'Passed' : 'Failed';
+            }
+
             $data = [
                 $site->id,
                 $site->name,
                 $site->url,
-                $result->created_at->format('d-m-Y h:i:s'),
-                ($result->passed) ? 'Passed: ' . $result->status_code : 'Failed: ' . $result->status_code
+                $date,
+                $status
             ];
 
             array_push($dataSet, $data);
